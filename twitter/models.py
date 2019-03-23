@@ -19,3 +19,12 @@ class Tweet(models.Model):
 
 	def __str__(self):
 		return self.heading;
+
+class TweetLikes(models.Model):
+	tweet = models.ForeignKey(Tweet, on_delete = models.CASCADE);
+	user = models.ForeignKey(User, on_delete = models.CASCADE);
+
+	def __str__(self):
+		return self.tweet.heading + "------ " + self.user.user_name ;
+
+

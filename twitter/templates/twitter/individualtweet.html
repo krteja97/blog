@@ -13,7 +13,17 @@
 				<li>{{ mytweet.tweettext }}</li>
 				<li>{{ mytweet.publish_date }}</li>
 				<br>
+				<li>Likes count : {{likescount}} </li>
 		</ul>
+
+		<div>
+			<h3>Want to like the tweet</h3>
+			<form action="/twitter/tweets/{{ mytweet.id }}/liketweet/" method="POST">
+				{% csrf_token %}
+				<input type="submit" name="Submit">
+			</form>
+		</div>
+
 	{% else %}
 		<h3 >Requested tweet not available</h3>
 	{% endif %}

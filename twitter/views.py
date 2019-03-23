@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotFound
-from .models import User,Tweet
+from .models import User,Tweet,TweetLikes 
 from django.template import RequestContext
 import datetime
 
@@ -169,7 +169,15 @@ def individualtweet(request, tweetid):
 		return redirect(index);
 	try:
 		mytweet = Tweet.objects.get(pk=tweetid);
-		return render(request, 'twitter/individualtweet.html', {'mytweet' : mytweet, 'username' : request.session['username']});
+		userinDb = User.objects.get(user_name = request.session['username'] );
+		try:
+			countoflikes = TweetLikes.objects.filter(tweet = mytweet).count();
+		except:
+			countoflikes = 0;
+		print(countoflikes);
+
+		return render(request, 'twitter/individualtweet.html', {'mytweet' : mytweet, 
+			'username' : request.session['username'],  'likescount' : countoflikes});
 	except:
 		return HttpResponseNotFound("tweet doesnt exist");
 
@@ -219,3 +227,42 @@ def checkValidUsernameString(usernamestring):
 		return True;
 	except:
 		return False;
+
+
+#############-----------------tweets-likes-----------############
+
+def checkProperTweetId(tweetid):
+	try:
+		tweetinDb = Tweet.objects.get(pk= tweetid);
+		return True;
+	except:
+		return False;
+
+
+def liketweet(request, tweetid):
+	if(checkUserSessionExists(request) == False ):
+		return redirect(index);
+	if(request.method == 'GET'):
+		return HttpResponseNotFound("Invalid request");
+	if(request.method == 'POST'):
+		if(checkProperTweetId(tweetid) == False):
+			return HttpResponseNotFound("Invalid request!! tweet not found");
+		else:
+			## so tweetid is proper ##
+			try:
+				tweetinDb = Tweet.objects.get(pk=tweetid);
+				userinDb = User.objects.get(user_name = request.session['username'] )
+				userintweetlikesDb = TweetLikes.objects.get(tweet = tweetinDb,user = userinDb);
+
+				if(userintweetlikesDb):
+				## so user already liked the tweet
+					TweetLikes.objects.get(tweet = tweetinDb,user = userinDb).delete();
+					return HttpResponse("successfully unliked");					
+				else:
+					## so user hasn't liked the tweet
+					TweetLikes.objects.create(tweet = tweetinDb, user = userinDb);
+
+			except TweetLikes.DoesNotExist:
+				TweetLikes.objects.create(tweet = tweetinDb, user = userinDb);
+				return HttpResponse("successfully liked");
+				

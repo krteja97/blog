@@ -15,4 +15,7 @@ urlpatterns = [
 	path('users/<str:usernamestring>', views.users, name = 'users'),
 	path('tweets/<int:tweetid>', views.individualtweet, name = 'individualtweet'),
 
+	#tweets likes
+	path('tweets/<int:tweetid>/liketweet/', views.liketweet, name = 'liketweet'),
+
 ]
