@@ -1,0 +1,20 @@
+<h1 align="center"> Welcome to Twitter!! the new way to spread your views</h1>
+<h2 align="center"> Welcome {{ username }}</h2>
+
+<h3 align="right"><a href="{% url 'logout' %}">Logout</a> </h3>
+<br>
+
+<div >
+	{% if mytweet %}
+		<h3 >{{ mytweet.heading }}</h3>
+		<ul>
+				<li><a href="{% url 'users' mytweet.author.user_name %}">{{ mytweet.author.user_name }}</a></li>
+				<li>{{ mytweet.heading }}</li>
+				<li>{{ mytweet.tweettext }}</li>
+				<li>{{ mytweet.publish_date }}</li>
+				<br>
+		</ul>
+	{% else %}
+		<h3 >Requested tweet not available</h3>
+	{% endif %}
+</div>

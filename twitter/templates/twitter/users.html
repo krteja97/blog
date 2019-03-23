@@ -1,0 +1,31 @@
+<h1 align="center"> Welcome to Twitter!! the new way to spread your views</h1>
+<h2 align="center"> Welcome {{ username }}</h2>
+
+<h3 align="right"><a href="{% url 'logout' %}">Logout</a> </h3>
+<br>
+
+<div >
+	<h3>The user Profile</h3>
+	<ul>
+		<li>{{ userlist.user_name }}</li>
+		<li>{{ userlist.name }}</li>
+		<li>{{ userlist.dob }}</li>
+		<li>{{ userlist.city }}</li>
+	</ul>
+</div>
+<br>
+
+<div>
+	{% if mytweets %}
+		<h3 >latest Tweets</h3>
+		<ul>
+			{% for x in mytweets %}
+				<li><a href="{% url 'individualtweet' x.id %}">{{ x.heading }}</a></li>	
+				<li>{{ x.tweettext }}</li>
+				<br>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<h3 >No tweets are available</h3>
+	{% endif %}
+</div>

@@ -1,0 +1,38 @@
+<head>
+	{% load static %}
+  	<link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+
+
+<h1 align="center"> Welcome to Twitter!! the new way to spread your views</h1>
+<h2 align="center"> Enter your valid details to register </h2>
+
+<div align="center">
+	<form action="/twitter/register/" method="POST" >
+		{% csrf_token %}
+
+		Name:<br>
+		<input type="text" name="name" value="ravi123">
+		<br><br>
+
+		City:<br>
+		<input type="text" name="city" value="trichy">
+		<br><br>
+
+		Date of Birth:<br>
+		<input type="date" name="dateofbirth">
+		<br><br>
+
+		Username:<br>
+		<input type="text" name="username" value="sixitine">
+		<br><br>
+
+		Password:<br>
+		<input type="password" name="password" value="069">
+		<br><br>
+
+		<input type="submit" name="Submit">
+	</form>	
+</div>
+
+

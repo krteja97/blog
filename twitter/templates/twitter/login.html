@@ -1,0 +1,18 @@
+<h1 align="center"> Welcome to Twitter!! the new way to spread your views</h1>
+<h2 align="center"> Enter your valid details to login </h2>
+
+<div align="center">
+	<form action="/twitter/login/" method="post">
+		{% csrf_token %}
+
+		Username: <br>
+		<input type="text" name="username">
+		<br><br>
+
+		Password: <br>
+		<input type="Password" name="password">
+		<br><br>
+
+		<input type="submit" name="Submit">
+	</form>
+</div>
